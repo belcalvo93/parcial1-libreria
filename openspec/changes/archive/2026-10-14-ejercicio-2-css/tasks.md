@@ -55,7 +55,7 @@
 
 ## 10. Verificación manual integral
 
-- [ ] 10.1 Abrir `index.html` con doble clic (sin servidor, sin red) y verificar en el navegador: (a) viewport 320 px → sin barra de scroll horizontal de la página, textos y controles legibles, tabla con scroll interno propio; (b) viewport 1280 px → composición equilibrada, tablas sin scroll interno; (c) recorrido completo con Tab → foco visible en enlaces, botones, campos, `select` y `summary`; (d) sin JS → los 11 mensajes ocultos; forzando visibilidad de un `.mensaje--error` → texto + marcador «⚠»; (e) ninguna referencia externa (sin CDN, sin fuentes externas, sin `<style>` ni `style=""` en el HTML); (f) `js/` e `index.html` intactos (`git status` sin cambios fuera de `css/styles.css` y `openspec/`)
+- [x] 10.1 Abrir `index.html` con doble clic (sin servidor, sin red) y verificar en el navegador: (a) viewport 320 px → sin barra de scroll horizontal de la página, textos y controles legibles, tabla con scroll interno propio; (b) viewport 1280 px → composición equilibrada, tablas sin scroll interno; (c) recorrido completo con Tab → foco visible en enlaces, botones, campos, `select` y `summary`; (d) sin JS → los 11 mensajes ocultos; forzando visibilidad de un `.mensaje--error` → texto + marcador «⚠»; (e) ninguna referencia externa (sin CDN, sin fuentes externas, sin `<style>` ni `style=""` en el HTML); (f) `js/` e `index.html` intactos (`git status` sin cambios fuera de `css/styles.css` y `openspec/`)
 - [x] 10.2 Correr `openspec validate ejercicio-2-css` y confirmar que pasa sin errores (verificación: salida del CLI sin errores de validación)
 
 ## Workflow follow-up
