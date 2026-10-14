@@ -76,7 +76,7 @@ Paleta (papel + tinta, coherente con una librería) y sistema de tokens:
 }
 ```
 
-**Por qué:** una sola fuente de verdad hace que la coherencia (8 pts del enunciado) sea estructural y no una cuestión de recordar valores. **Alternativa descartada:** valores literales en cada regla — se rechaza por duplicación y porque la consigna pide «identidad propia y coherente» explícitable.
+**Por qué:** una sola fuente de verdad hace que la coherencia sea estructural y no una cuestión de recordar valores. **Alternativa descartada:** valores literales en cada regla — se rechaza por duplicación y porque la consigna pide «identidad propia y coherente» explícitable.
 
 Identidad por componente:
 
@@ -111,7 +111,7 @@ Identidad por componente:
 
 **Costo (conocido y aceptado):**
 
-1. Cambia el modelo de layout de la tabla: al pasar a `display: block`, la tabla interna resultante ya no estira sus columnas al ancho del contenedor cuando el contenido es angosto (las columnas dejan de llenar el ancho disponible en `.tabla-clientes`, por ejemplo).
+1. Cambia el modelo de layout de la tabla: al pasar a `display: block`, la tabla interna resultante ya no estira sus columnas al ancho del contenedor cuando el contenido es angosto (las columnas dejan de llenar el ancho disponible en `#tabla-clientes`, por ejemplo).
 2. Riesgo de accesibilidad: algunos pares navegador + lector de pantalla pierden la semántica de tabla (`table`/`row`/`cell`) cuando el elemento `table` tiene `display` distinto de `table`. Los `th scope="col"` del HTML siguen presentes, lo que compensa parcialmente.
 
 **Mitigación:**
@@ -196,8 +196,8 @@ Ambas son **propuestas para Belén**, no tareas de este change:
 
 ## Risks / Trade-offs
 
-- [`display: block` en `.tabla` puede quitar semántica de tabla en algunos lectores de pantalla] → mitigación D3: cambios mínimos, `th scope="col"` intactos, verificación manual del árbre de accesibilidad; alternativa limpia registrada como propuesta a Belén.
-- [`:has()` sin soporte en un navegador muy viejo] → degradación elegente al layout genérico de `.form__grupo` (D4); nada se vuelve ilegible.
+- [`display: block` en `.tabla` puede quitar semántica de tabla en algunos lectores de pantalla] → mitigación D3: cambios mínimos, `th scope="col"` intactos, verificación manual del árbol de accesibilidad; alternativa limpia registrada como propuesta a Belén.
+- [`:has()` sin soporte en un navegador muy viejo] → degradación elegante al layout genérico de `.form__grupo` (D4); nada se vuelve ilegible.
 - [`!important` en `[hidden]`] → regla única y comentada; si alguien escribe `.mensaje { display: … }` sin respetarla, el bug sería visible de inmediato al cargar la página (mensajes visibles sin JS), fácil de detectar en la verificación manual.
 - [`content: "⚠"` duplicado si el JS futuro agrega su propio prefijo] → el JS del Ejercicio 3 solo quita `hidden` (previsto en los specs), no escribe texto; si lo hiciera, se quita el `::before` en ese punto.
 - [Ajustes finos de alineación solo visibles en el navegador real] → tasks.md incluye verificación manual a 320 px y 1280 px antes de dar por terminado el ejercicio.
