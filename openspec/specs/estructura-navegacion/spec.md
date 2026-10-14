@@ -47,14 +47,14 @@ El sistema SHALL incluir en el HTML todos los mensajes de estado que el JS mostr
 - **WHEN** se carga la página sin ejecutar JavaScript
 - **THEN** ningún mensaje de estado es visible porque todos llevan `hidden`, y cada uno tiene un `id` único y descriptivo
 
-### Requirement: Hoja de estilos vacía enlazada y cero dependencias
+### Requirement: Hoja de estilos enlazada y cero dependencias
 
-El sistema SHALL enlazar `css/styles.css` (archivo vacío) desde el HTML, no SHALL incluir estilos propios ni código JavaScript, y no SHALL usar librerías, frameworks ni CDNs.
+El sistema SHALL enlazar `css/styles.css` desde el HTML como la única hoja de estilos externa, con toda la presentación contenida en ese archivo, sin estilos en línea ni bloques `<style>` en el documento, sin código JavaScript y sin librerías, frameworks ni CDNs.
 
-#### Scenario: Enlace a estilos vacío
+#### Scenario: Enlace a la hoja de estilos externa
 
-- **WHEN** se inspecciona el `head` del documento y el contenido de `css/styles.css`
-- **THEN** existe el `<link>` a `css/styles.css` y ese archivo está vacío
+- **WHEN** se inspecciona el `head` del documento y el archivo `css/styles.css`
+- **THEN** existe el `<link>` a `css/styles.css`, la presentación vive en ese archivo y el HTML no contiene reglas propias (`<style>` ni atributos `style`)
 
 #### Scenario: Sin dependencias externas
 
