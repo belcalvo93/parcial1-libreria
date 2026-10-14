@@ -36,7 +36,7 @@ El sistema SHALL usar etiquetas semánticas (`header`, `nav`, `main`, `section`,
 
 #### Scenario: Botones descriptivos
 
-- **WHEN** se listan todos los `<button>` de la página
+- **WHEN** se listan todos los `<button` de la página
 - **THEN** cada uno tiene un texto que describe su acción (por ejemplo «Agregar renglón», «Confirmar venta»)
 
 ### Requirement: Mensajes previstos con hidden e id

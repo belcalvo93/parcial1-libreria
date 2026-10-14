@@ -15,19 +15,11 @@ Ver `proposal.md` (Why). Estado actual: el repo tiene `docs/` (consigna en PDF),
 
 Se usa un único `index.html` con `<section id="catalogo">`, `<section id="libros">`, `<section id="clientes">`, `<section id="ventas">`, `<section id="historial">`, y un `nav` con cinco enlaces `href="#..."`. Alternativa considerada (varias páginas HTML): se descarta porque duplica `header`/`nav`/`footer`, complica mantener `id` únicos para el JS y exige resolver rutas relativas al abrir con doble clic.
 
-### 2. Convención de nombres e inventario de `id` congelado
+### 2. Convención de nombres
 
 - Archivos: `index.html`, `css/styles.css` (vacío), `js/` reservada sin contenido en este change.
-- `id` en kebab-case por dominio. Inventario cerrado (congelado al archivar, el JS de los Ejercicios 3–5 los usa tal cual):
-  - Secciones: `catalogo`, `libros`, `clientes`, `ventas`, `historial`.
-  - Formularios: `form-libro`, `form-cliente`, `form-venta`.
-  - Campos catálogo: `catalogo-busqueda` (`type="search"`), botón `catalogo-buscar`.
-  - Campos libro: `libro-titulo`, `libro-isbn`, `libro-precio`, `libro-editorial`, `libro-genero`, `libro-autores`.
-  - Campos cliente: `cliente-nombre`, `cliente-email`.
-  - Campos venta: `venta-cliente`, y por renglón `{n}` (1-based): `venta-libro-{n}`, `venta-cantidad-{n}`, `venta-precio-{n}` (`<output>`, no editable), `venta-subtotal-{n}` (`<output>`), `venta-quitar-{n}` (botón «Quitar» del renglón). Resumen: `venta-total` (`<output>`). Botones: `venta-agregar` («Agregar renglón»), `venta-confirmar` («Confirmar venta»).
-  - Tablas (4, sin `tabla-ventas`: ventas no lleva tabla, lleva renglones + resumen): `tabla-catalogo`, `tabla-libros`, `tabla-clientes`, `tabla-historial`.
-  - Mensajes (11, todos con `hidden`): `mensaje-catalogo-vacia`, `mensaje-catalogo-sin-resultados`, `mensaje-libros-vacia`, `mensaje-clientes-vacia`, `mensaje-historial-vacia`, `mensaje-error-libro`, `mensaje-ok-libro`, `mensaje-error-cliente`, `mensaje-ok-cliente`, `mensaje-error-venta`, `mensaje-ok-venta`.
-- Clases reutilizables para el Ejercicio 2 — contrato con el Ej. 2 (sin tocar el HTML): `card`, `form`, `form__grupo`, `btn`, `btn--peligro` (botones «Quitar»), `tabla`, `mensaje`, `mensaje--error`, `mensaje--ok`. Los `id` son para el JS, las clases para el CSS: no se mezclan.
+- `id` en kebab-case por dominio: formularios (`form-libro`, `form-cliente`, `form-venta`), campos (`libro-titulo`, `libro-isbn`, `libro-precio`, `libro-editorial`, `libro-genero`, `libro-autores`, `cliente-nombre`, `cliente-email`, `venta-cliente`, `venta-libro-{n}`, `venta-cantidad-{n}`), tablas (`tabla-catalogo`, `tabla-libros`, `tabla-clientes`, `tabla-ventas`, `tabla-historial`), buscador (`catalogo-busqueda`), mensajes (`mensaje-<dominio>-vacia`, `mensaje-catalogo-sin-resultados`, `mensaje-error-<dominio>`, `mensaje-ok-<dominio>` con dominio en `libro | cliente | venta`).
+- Clases reutilizables para el Ejercicio 2 (sin tocar el HTML): `card`, `form`, `form__grupo`, `btn`, `btn--peligro` (botones «Quitar»), `tabla`, `mensaje`, `mensaje--error`, `mensaje--ok`. Los `id` son para el JS, las clases para el CSS: no se mezclan.
 
 ### 3. Tablas y detalle inline (decisiones 2 y 3)
 
@@ -40,50 +32,9 @@ Catálogo, listados, renglones de venta e historial son `<table>` con `thead`/`t
 - Por formulario (`form-libro`, `form-cliente`, `form-venta`): un contenedor de error (`role="alert"`) y uno de éxito, ubicados inmediatamente después del formulario (o dentro, al pie), con `hidden` e `id` (`mensaje-error-*`, `mensaje-ok-*`). Los mensajes de lista vacía y sin resultados van junto a su tabla con `hidden` e `id` (`mensaje-*-vacia`, `mensaje-catalogo-sin-resultados`).
 - Solo «Agregar renglón», «Quitar» (por renglón) y «Confirmar venta»: no hay «Limpiar venta» porque la limpieza la hace la confirmación del Ejercicio 5.
 
-### 5. Datos de ejemplo congelados (decisión 6, nombre fijo)
+### 5. Datos de ejemplo coherentes (decisión 6, nombre fijo)
 
-Nombre: «Librería Página Viva». Valores ficticios, congelados al archivar; el JS del Ejercicio 3 los reutiliza como conjunto inicial. Todos los ISBN son inventados, de 13 dígitos y distintos.
-
-Editoriales (2, opciones fijas de `libro-editorial`, sin ABM):
-- Editorial Faro Austral
-- Ediciones Puente Alto
-
-Géneros (2, opciones fijas de `libro-genero` más «Sin clasificar», sin ABM):
-- Fantasía Urbana
-- Ensayo Breve
-
-Autores (3, opciones fijas de `libro-autores` múltiple, sin ABM):
-- Lucía Ferreyra
-- Tomás Iriarte
-- Camila Duarte
-
-Libros (6; columnas: título | ISBN | precio | editorial | género | autores):
-1. El mapa de las horas lentas | 9789500100011 | 1500.00 | Editorial Faro Austral | Fantasía Urbana | Lucía Ferreyra — *renglón 1 de V-001*
-2. Crónicas del patio interior | 9789500100028 | 2000.00 | Ediciones Puente Alto | Ensayo Breve | Tomás Iriarte — *renglón 2 de V-001*
-3. Noche de vidrio molido | 9789500100035 | 1750.00 | Editorial Faro Austral | Sin clasificar | Camila Duarte
-4. Manual para perder trenes | 9789500100042 | 2300.00 | Ediciones Puente Alto | Fantasía Urbana | Lucía Ferreyra, Tomás Iriarte — *el de 2 autores*
-5. El oficio de la marea | 9789500100059 | 3100.00 | Editorial Faro Austral | Ensayo Breve | Camila Duarte
-6. Inventario de luces mínimas | 9789500100066 | 2800.00 | Ediciones Puente Alto | Sin clasificar | Tomás Iriarte
-
-Clientes (3; nombre completo | email):
-1. Valentina Ríos | valentina.rios@ejemplo.com — *cliente de V-001*
-2. Martín Aguirre | martin.aguirre@ejemplo.com
-3. Sofía Benítez | sofia.benitez@ejemplo.com
-
-Venta V-001 (única venta de ejemplo; cliente 1, fecha 2026-10-14):
-- Renglón 1: El mapa de las horas lentas × 2 @ 1500.00 = subtotal 3000.00
-- Renglón 2: Crónicas del patio interior × 1 @ 2000.00 = subtotal 2000.00
-- Total: 5000.00 (= 3000.00 + 2000.00; cada precio unitario coincide con el catálogo).
-
-Reglas de coherencia: cada libro tiene editorial y ≥1 autor de las listas; el género es opcional pero si existe es uno de los 2; la venta usa cliente y libros existentes con precios copiados del catálogo y total igual a la suma de subtotales.
-
-## Datos → HTML (dónde va cada valor)
-
-- `tabla-catalogo` y `tabla-libros`: las 6 filas de libros con sus 6 columnas.
-- `libro-editorial` / `libro-genero` (+«Sin clasificar») / `libro-autores`: opciones salen de las listas de arriba.
-- `tabla-clientes` y `venta-cliente`: los 3 clientes.
-- `form-venta` (renglón de ejemplo): `venta-libro-1` = El mapa de las horas lentas, `venta-cantidad-1` = 2, `venta-precio-1` = 1500.00, `venta-subtotal-1` = 3000.00, `venta-total` = 5000.00.
-- `tabla-historial` + `<details>`/`<summary>` de V-001: identificador V-001, fecha 2026-10-14, cliente Valentina Ríos, total 5000.00, con sus 2 renglones y subtotales.
+Nombre: «Librería Página Viva». Conjunto mínimo coherente: 2 editoriales, 2 géneros, 3 autores (las opciones de los `select` salen de acá, sin ABM), 6 libros (cada uno con editorial y ≥1 autor existentes; género opcional pero existente si se asigna; al menos uno sin género → «Sin clasificar»), 3 clientes y ≥1 venta (identificador, fecha, cliente existente, renglones con precio unitario igual al del catálogo, total igual a la suma de subtotales). Estos mismos valores los reutiliza el JS del Ejercicio 3 como conjunto inicial.
 
 ## Risks / Trade-offs
 

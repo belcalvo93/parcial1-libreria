@@ -1,332 +1,370 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Librería Página Viva</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
   <header>
     <h1>Librería Página Viva</h1>
   </header>
-  <nav aria-label="Navegación principal">
-    <ul>
-      <li><a href="#catalogo">Catálogo</a></li>
-      <li><a href="#libros">Libros</a></li>
-      <li><a href="#clientes">Clientes</a></li>
-      <li><a href="#ventas">Ventas</a></li>
-      <li><a href="#historial">Historial</a></li>
-    </ul>
+
+  <nav>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#libros">Libros</a>
+    <a href="#clientes">Clientes</a>
+    <a href="#ventas">Ventas</a>
+    <a href="#historial">Historial</a>
   </nav>
+
   <main>
-    <section id="catalogo" class="card">
-      <h2>Catálogo</h2>
-      <div class="form__grupo">
-        <label for="catalogo-busqueda">Buscar por título</label>
-        <input type="search" id="catalogo-busqueda" name="catalogo-busqueda" placeholder="Título del libro">
-        <button id="catalogo-buscar" class="btn" type="button">Buscar en el catálogo</button>
-      </div>
-      <table id="tabla-catalogo" class="tabla">
-        <thead>
-          <tr>
-            <th scope="col">Título</th>
-            <th scope="col">ISBN</th>
-            <th scope="col">Editorial</th>
-            <th scope="col">Género</th>
-            <th scope="col">Autores</th>
-            <th scope="col">Precio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>El mapa de las horas lentas</td>
-            <td>9789500100011</td>
-            <td>Editorial Faro Austral</td>
-            <td>Fantasía Urbana</td>
-            <td>Lucía Ferreyra</td>
-            <td>1500.00</td>
-          </tr>
-          <tr>
-            <td>Crónicas del patio interior</td>
-            <td>9789500100028</td>
-            <td>Ediciones Puente Alto</td>
-            <td>Ensayo Breve</td>
-            <td>Tomás Iriarte</td>
-            <td>2000.00</td>
-          </tr>
-          <tr>
-            <td>Noche de vidrio molido</td>
-            <td>9789500100035</td>
-            <td>Editorial Faro Austral</td>
-            <td>Sin clasificar</td>
-            <td>Camila Duarte</td>
-            <td>1750.00</td>
-          </tr>
-          <tr>
-            <td>Manual para perder trenes</td>
-            <td>9789500100042</td>
-            <td>Ediciones Puente Alto</td>
-            <td>Fantasía Urbana</td>
-            <td>Lucía Ferreyra, Tomás Iriarte</td>
-            <td>2300.00</td>
-          </tr>
-          <tr>
-            <td>El oficio de la marea</td>
-            <td>9789500100059</td>
-            <td>Editorial Faro Austral</td>
-            <td>Ensayo Breve</td>
-            <td>Camila Duarte</td>
-            <td>3100.00</td>
-          </tr>
-          <tr>
-            <td>Inventario de luces mínimas</td>
-            <td>9789500100066</td>
-            <td>Ediciones Puente Alto</td>
-            <td>Sin clasificar</td>
-            <td>Tomás Iriarte</td>
-            <td>2800.00</td>
-          </tr>
-        </tbody>
-      </table>
-      <p id="mensaje-catalogo-vacia" class="mensaje" hidden>No hay libros en el catálogo.</p>
-      <p id="mensaje-catalogo-sin-resultados" class="mensaje" hidden>No se encontraron libros con ese título.</p>
-    </section>
 
-    <section id="libros" class="card">
-      <h2>Libros</h2>
-      <form id="form-libro" class="form" novalidate>
-        <div class="form__grupo">
-          <label for="libro-titulo">Título</label>
-          <input type="text" id="libro-titulo" name="libro-titulo">
-        </div>
-        <div class="form__grupo">
-          <label for="libro-isbn">ISBN</label>
-          <input type="text" id="libro-isbn" name="libro-isbn">
-        </div>
-        <div class="form__grupo">
-          <label for="libro-precio">Precio</label>
-          <input type="number" id="libro-precio" name="libro-precio" min="0" step="0.01">
-        </div>
-        <div class="form__grupo">
-          <label for="libro-editorial">Editorial</label>
-          <select id="libro-editorial" name="libro-editorial">
-            <option value="faro-austral">Editorial Faro Austral</option>
-            <option value="puente-alto">Ediciones Puente Alto</option>
-          </select>
-        </div>
-        <div class="form__grupo">
-          <label for="libro-genero">Género</label>
-          <select id="libro-genero" name="libro-genero">
-            <option value="fantasia-urbana">Fantasía Urbana</option>
-            <option value="ensayo-breve">Ensayo Breve</option>
-            <option value="sin-clasificar">Sin clasificar</option>
-          </select>
-        </div>
-        <div class="form__grupo">
-          <label for="libro-autores">Autores</label>
-          <select id="libro-autores" name="libro-autores" multiple>
-            <option value="lucia-ferreyra">Lucía Ferreyra</option>
-            <option value="tomas-iriarte">Tomás Iriarte</option>
-            <option value="camila-duarte">Camila Duarte</option>
-          </select>
-        </div>
-        <button class="btn" type="submit">Agregar libro</button>
-      </form>
-      <p id="mensaje-error-libro" class="mensaje mensaje--error" role="alert" hidden>No se pudo agregar el libro. Revisá los datos.</p>
-      <p id="mensaje-ok-libro" class="mensaje mensaje--ok" hidden>Libro agregado correctamente.</p>
-      <table id="tabla-libros" class="tabla">
-        <thead>
-          <tr>
-            <th scope="col">Título</th>
-            <th scope="col">ISBN</th>
-            <th scope="col">Editorial</th>
-            <th scope="col">Género</th>
-            <th scope="col">Autores</th>
-            <th scope="col">Precio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>El mapa de las horas lentas</td>
-            <td>9789500100011</td>
-            <td>Editorial Faro Austral</td>
-            <td>Fantasía Urbana</td>
-            <td>Lucía Ferreyra</td>
-            <td>1500.00</td>
-          </tr>
-          <tr>
-            <td>Crónicas del patio interior</td>
-            <td>9789500100028</td>
-            <td>Ediciones Puente Alto</td>
-            <td>Ensayo Breve</td>
-            <td>Tomás Iriarte</td>
-            <td>2000.00</td>
-          </tr>
-          <tr>
-            <td>Noche de vidrio molido</td>
-            <td>9789500100035</td>
-            <td>Editorial Faro Austral</td>
-            <td>Sin clasificar</td>
-            <td>Camila Duarte</td>
-            <td>1750.00</td>
-          </tr>
-          <tr>
-            <td>Manual para perder trenes</td>
-            <td>9789500100042</td>
-            <td>Ediciones Puente Alto</td>
-            <td>Fantasía Urbana</td>
-            <td>Lucía Ferreyra, Tomás Iriarte</td>
-            <td>2300.00</td>
-          </tr>
-          <tr>
-            <td>El oficio de la marea</td>
-            <td>9789500100059</td>
-            <td>Editorial Faro Austral</td>
-            <td>Ensayo Breve</td>
-            <td>Camila Duarte</td>
-            <td>3100.00</td>
-          </tr>
-          <tr>
-            <td>Inventario de luces mínimas</td>
-            <td>9789500100066</td>
-            <td>Ediciones Puente Alto</td>
-            <td>Sin clasificar</td>
-            <td>Tomás Iriarte</td>
-            <td>2800.00</td>
-          </tr>
-        </tbody>
-      </table>
-      <p id="mensaje-libros-vacia" class="mensaje" hidden>No hay libros registrados.</p>
-    </section>
-
-    <section id="clientes" class="card">
-      <h2>Clientes</h2>
-      <form id="form-cliente" class="form" novalidate>
-        <div class="form__grupo">
-          <label for="cliente-nombre">Nombre completo</label>
-          <input type="text" id="cliente-nombre" name="cliente-nombre">
-        </div>
-        <div class="form__grupo">
-          <label for="cliente-email">Email</label>
-          <input type="email" id="cliente-email" name="cliente-email">
-        </div>
-        <button class="btn" type="submit">Agregar cliente</button>
-      </form>
-      <p id="mensaje-error-cliente" class="mensaje mensaje--error" role="alert" hidden>No se pudo agregar el cliente. Revisá los datos.</p>
-      <p id="mensaje-ok-cliente" class="mensaje mensaje--ok" hidden>Cliente agregado correctamente.</p>
-      <table id="tabla-clientes" class="tabla">
-        <thead>
-          <tr>
-            <th scope="col">Nombre completo</th>
-            <th scope="col">Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Valentina Ríos</td>
-            <td>valentina.rios@ejemplo.com</td>
-          </tr>
-          <tr>
-            <td>Martín Aguirre</td>
-            <td>martin.aguirre@ejemplo.com</td>
-          </tr>
-          <tr>
-            <td>Sofía Benítez</td>
-            <td>sofia.benitez@ejemplo.com</td>
-          </tr>
-        </tbody>
-      </table>
-      <p id="mensaje-clientes-vacia" class="mensaje" hidden>No hay clientes registrados.</p>
-    </section>
-
-    <section id="ventas" class="card">
-      <h2>Ventas</h2>
-      <form id="form-venta" class="form" novalidate>
-        <div class="form__grupo">
-          <label for="venta-cliente">Cliente</label>
-          <select id="venta-cliente" name="venta-cliente">
-            <option value="valentina-rios">Valentina Ríos</option>
-            <option value="martin-aguirre">Martín Aguirre</option>
-            <option value="sofia-benitez">Sofía Benítez</option>
-          </select>
-        </div>
-        <div class="form__grupo">
-          <label for="venta-libro-1">Libro del renglón 1</label>
-          <select id="venta-libro-1" name="venta-libro-1">
-            <option value="9789500100011">El mapa de las horas lentas</option>
-            <option value="9789500100028">Crónicas del patio interior</option>
-            <option value="9789500100035">Noche de vidrio molido</option>
-            <option value="9789500100042">Manual para perder trenes</option>
-            <option value="9789500100059">El oficio de la marea</option>
-            <option value="9789500100066">Inventario de luces mínimas</option>
-          </select>
-          <label for="venta-cantidad-1">Cantidad del renglón 1</label>
-          <input type="number" id="venta-cantidad-1" name="venta-cantidad-1" min="1" value="2">
-          <p>Precio unitario: <output id="venta-precio-1" for="venta-libro-1">1500.00</output></p>
-          <p>Subtotal: <output id="venta-subtotal-1" for="venta-libro-1 venta-cantidad-1">3000.00</output></p>
-          <button id="venta-quitar-1" class="btn btn--peligro" type="button">Quitar renglón 1</button>
-        </div>
-        <button id="venta-agregar" class="btn" type="button">Agregar renglón</button>
-        <p>Total: <output id="venta-total" for="venta-libro-1 venta-cantidad-1">5000.00</output></p>
-        <button id="venta-confirmar" class="btn" type="submit">Confirmar venta</button>
-      </form>
-      <p id="mensaje-error-venta" class="mensaje mensaje--error" role="alert" hidden>No se pudo confirmar la venta. Revisá los datos.</p>
-      <p id="mensaje-ok-venta" class="mensaje mensaje--ok" hidden>Venta confirmada correctamente.</p>
-    </section>
-
-    <section id="historial" class="card">
-      <h2>Historial</h2>
-      <table id="tabla-historial" class="tabla">
-        <thead>
-          <tr>
-            <th scope="col">Identificador</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>V-001</td>
-            <td>2026-10-14</td>
-            <td>Valentina Ríos</td>
-            <td>5000.00</td>
-          </tr>
-        </tbody>
-      </table>
-      <details>
-        <summary>Ver detalle de V-001</summary>
-        <table class="tabla">
+    <section id="catalogo">
+      <div class="card">
+        <h2>Catálogo</h2>
+        <form class="form" onsubmit="return false">
+          <div class="form__grupo">
+            <label for="catalogo-busqueda">Buscar libro por título</label>
+            <input type="search" id="catalogo-busqueda" name="catalogo-busqueda">
+          </div>
+          <button type="submit" class="btn">Buscar</button>
+        </form>
+        <p id="mensaje-catalogo-vacia" class="mensaje" hidden>No hay libros en el catálogo.</p>
+        <p id="mensaje-catalogo-sin-resultados" class="mensaje" hidden>No se encontraron libros con ese título.</p>
+        <table id="tabla-catalogo" class="tabla">
           <thead>
             <tr>
-              <th scope="col">Libro</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Precio unitario</th>
-              <th scope="col">Subtotal</th>
+              <th>Título</th>
+              <th>ISBN</th>
+              <th>Editorial</th>
+              <th>Género</th>
+              <th>Autores</th>
+              <th>Precio</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>El mapa de las horas lentas</td>
-              <td>2</td>
-              <td>1500.00</td>
-              <td>3000.00</td>
+              <td>Cien años de soledad</td>
+              <td>978-030-7472-00-1</td>
+              <td>Editorial Sur</td>
+              <td>Novela</td>
+              <td>Gabriel García Márquez</td>
+              <td>$15.000</td>
             </tr>
             <tr>
-              <td>Crónicas del patio interior</td>
-              <td>1</td>
-              <td>2000.00</td>
-              <td>2000.00</td>
+              <td>El Aleph</td>
+              <td>978-842-063-785-2</td>
+              <td>Editorial Atlántida</td>
+              <td>Poesía</td>
+              <td>Jorge Luis Borges</td>
+              <td>$12.000</td>
+            </tr>
+            <tr>
+              <td>Rayuela</td>
+              <td>978-987-566-987-3</td>
+              <td>Editorial Sur</td>
+              <td>Novela</td>
+              <td>Julio Cortázar</td>
+              <td>$18.000</td>
+            </tr>
+            <tr>
+              <td>Ficciones</td>
+              <td>978-080-214-754-4</td>
+              <td>Editorial Atlántida</td>
+              <td>Poesía</td>
+              <td>Jorge Luis Borges</td>
+              <td>$11.000</td>
+            </tr>
+            <tr>
+              <td>Crónica de una muerte anunciada</td>
+              <td>978-030-7472-00-2</td>
+              <td>Editorial Sur</td>
+              <td>Novela</td>
+              <td>Gabriel García Márquez</td>
+              <td>$14.000</td>
+            </tr>
+            <tr>
+              <td>El libro del silencio</td>
+              <td>978-000-000-000-0</td>
+              <td>Editorial Atlántida</td>
+              <td>Sin clasificar</td>
+              <td>Julio Cortázar</td>
+              <td>$9.000</td>
             </tr>
           </tbody>
         </table>
-      </details>
-      <p id="mensaje-historial-vacia" class="mensaje" hidden>No hay ventas registradas.</p>
+      </div>
     </section>
+
+    <section id="libros">
+      <div class="card">
+        <h2>Alta de libro</h2>
+        <form id="form-libro" class="form" novalidate>
+          <div class="form__grupo">
+            <label for="libro-titulo">Título</label>
+            <input type="text" id="libro-titulo" name="libro-titulo">
+          </div>
+          <div class="form__grupo">
+            <label for="libro-isbn">ISBN</label>
+            <input type="text" id="libro-isbn" name="libro-isbn">
+          </div>
+          <div class="form__grupo">
+            <label for="libro-precio">Precio</label>
+            <input type="number" id="libro-precio" name="libro-precio" min="0">
+          </div>
+          <div class="form__grupo">
+            <label for="libro-editorial">Editorial</label>
+            <select id="libro-editorial" name="libro-editorial">
+              <option value="Editorial Sur">Editorial Sur</option>
+              <option value="Editorial Atlántida">Editorial Atlántida</option>
+            </select>
+          </div>
+          <div class="form__grupo">
+            <label for="libro-genero">Género</label>
+            <select id="libro-genero" name="libro-genero">
+              <option value="Novela">Novela</option>
+              <option value="Poesía">Poesía</option>
+              <option value="Sin clasificar">Sin clasificar</option>
+            </select>
+          </div>
+          <div class="form__grupo">
+            <label for="libro-autores">Autores</label>
+            <select id="libro-autores" name="libro-autores" multiple>
+              <option value="Gabriel García Márquez">Gabriel García Márquez</option>
+              <option value="Jorge Luis Borges">Jorge Luis Borges</option>
+              <option value="Julio Cortázar">Julio Cortázar</option>
+            </select>
+          </div>
+          <button type="submit" class="btn">Agregar libro</button>
+        </form>
+        <p id="mensaje-error-libro" class="mensaje mensaje--error" role="alert" hidden></p>
+        <p id="mensaje-ok-libro" class="mensaje mensaje--ok" hidden></p>
+      </div>
+      <div class="card">
+        <h2>Libros registrados</h2>
+        <p id="mensaje-libros-vacia" class="mensaje" hidden>No hay libros registrados.</p>
+        <table id="tabla-libros" class="tabla">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>ISBN</th>
+              <th>Editorial</th>
+              <th>Género</th>
+              <th>Autores</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cien años de soledad</td>
+              <td>978-030-7472-00-1</td>
+              <td>Editorial Sur</td>
+              <td>Novela</td>
+              <td>Gabriel García Márquez</td>
+              <td>$15.000</td>
+            </tr>
+            <tr>
+              <td>El Aleph</td>
+              <td>978-842-063-785-2</td>
+              <td>Editorial Atlántida</td>
+              <td>Poesía</td>
+              <td>Jorge Luis Borges</td>
+              <td>$12.000</td>
+            </tr>
+            <tr>
+              <td>Rayuela</td>
+              <td>978-987-566-987-3</td>
+              <td>Editorial Sur</td>
+              <td>Novela</td>
+              <td>Julio Cortázar</td>
+              <td>$18.000</td>
+            </tr>
+            <tr>
+              <td>Ficciones</td>
+              <td>978-080-214-754-4</td>
+              <td>Editorial Atlántida</td>
+              <td>Poesía</td>
+              <td>Jorge Luis Borges</td>
+              <td>$11.000</td>
+            </tr>
+            <tr>
+              <td>Crónica de una muerte anunciada</td>
+              <td>978-030-7472-00-2</td>
+              <td>Editorial Sur</td>
+              <td>Novela</td>
+              <td>Gabriel García Márquez</td>
+              <td>$14.000</td>
+            </tr>
+            <tr>
+              <td>El libro del silencio</td>
+              <td>978-000-000-000-0</td>
+              <td>Editorial Atlántida</td>
+              <td>Sin clasificar</td>
+              <td>Julio Cortázar</td>
+              <td>$9.000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="clientes">
+      <div class="card">
+        <h2>Alta de cliente</h2>
+        <form id="form-cliente" class="form" novalidate>
+          <div class="form__grupo">
+            <label for="cliente-nombre">Nombre completo</label>
+            <input type="text" id="cliente-nombre" name="cliente-nombre">
+          </div>
+          <div class="form__grupo">
+            <label for="cliente-email">Email</label>
+            <input type="email" id="cliente-email" name="cliente-email">
+          </div>
+          <button type="submit" class="btn">Agregar cliente</button>
+        </form>
+        <p id="mensaje-error-cliente" class="mensaje mensaje--error" role="alert" hidden></p>
+        <p id="mensaje-ok-cliente" class="mensaje mensaje--ok" hidden></p>
+      </div>
+      <div class="card">
+        <h2>Clientes registrados</h2>
+        <p id="mensaje-clientes-vacia" class="mensaje" hidden>No hay clientes registrados.</p>
+        <table id="tabla-clientes" class="tabla">
+          <thead>
+            <tr>
+              <th>Nombre completo</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>María González</td>
+              <td>maria@email.com</td>
+            </tr>
+            <tr>
+              <td>Juan Pérez</td>
+              <td>juan@email.com</td>
+            </tr>
+            <tr>
+              <td>Ana López</td>
+              <td>ana@email.com</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="ventas">
+      <div class="card">
+        <h2>Nueva venta</h2>
+        <form id="form-venta" class="form" novalidate>
+          <div class="form__grupo">
+            <label for="venta-cliente">Cliente</label>
+            <select id="venta-cliente" name="venta-cliente">
+              <option value="María González">María González</option>
+              <option value="Juan Pérez">Juan Pérez</option>
+              <option value="Ana López">Ana López</option>
+            </select>
+          </div>
+          <div id="renglones-venta">
+            <div class="renglon-venta" id="renglon-0">
+              <div class="form__grupo">
+                <label for="venta-libro-0">Libro</label>
+                <select id="venta-libro-0" name="venta-libro-0">
+                  <option value="Cien años de soledad">Cien años de soledad</option>
+                  <option value="El Aleph">El Aleph</option>
+                  <option value="Rayuela">Rayuela</option>
+                  <option value="Ficciones">Ficciones</option>
+                  <option value="Crónica de una muerte anunciada">Crónica de una muerte anunciada</option>
+                  <option value="El libro del silencio">El libro del silencio</option>
+                </select>
+              </div>
+              <div class="form__grupo">
+                <label for="venta-cantidad-0">Cantidad</label>
+                <input type="number" id="venta-cantidad-0" name="venta-cantidad-0" min="1" value="1">
+              </div>
+              <div class="form__grupo">
+                <label>Precio unitario</label>
+                <output id="venta-precio-0" class="precio-unitario">$15.000</output>
+              </div>
+              <div class="form__grupo">
+                <label>Subtotal</label>
+                <output id="venta-subtotal-0" class="subtotal">$15.000</output>
+              </div>
+              <button type="button" class="btn btn--peligro">Quitar renglón</button>
+            </div>
+          </div>
+          <button type="button" id="btn-agregar-renglon" class="btn">Agregar renglón</button>
+          <div class="form__grupo">
+            <label>Total</label>
+            <output id="venta-total" class="total">$15.000</output>
+          </div>
+          <button type="submit" class="btn">Confirmar venta</button>
+        </form>
+        <p id="mensaje-error-venta" class="mensaje mensaje--error" role="alert" hidden></p>
+        <p id="mensaje-ok-venta" class="mensaje mensaje--ok" hidden></p>
+      </div>
+    </section>
+
+    <section id="historial">
+      <div class="card">
+        <h2>Historial de ventas</h2>
+        <p id="mensaje-historial-vacia" class="mensaje" hidden>No hay ventas registradas.</p>
+        <table id="tabla-historial" class="tabla">
+          <thead>
+            <tr>
+              <th>Identificador</th>
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>V001</td>
+              <td>2026-01-15</td>
+              <td>María González</td>
+              <td>$27.000</td>
+            </tr>
+          </tbody>
+        </table>
+        <details class="detalle-venta">
+          <summary>Ver detalle de venta V001</summary>
+          <table class="tabla">
+            <thead>
+              <tr>
+                <th>Libro</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cien años de soledad</td>
+                <td>1</td>
+                <td>$15.000</td>
+                <td>$15.000</td>
+              </tr>
+              <tr>
+                <td>El Aleph</td>
+                <td>1</td>
+                <td>$12.000</td>
+                <td>$12.000</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+      </div>
+    </section>
+
   </main>
+
   <footer>
-    <p>Librería Página Viva — Ejercicio 1: estructura HTML</p>
+    <p>Librería Página Viva — 2026</p>
   </footer>
+
 </body>
 </html>
