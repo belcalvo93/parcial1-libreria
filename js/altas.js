@@ -223,6 +223,13 @@
     poblarSelect(document.getElementById("libro-autores"), DATOS.autores);
   }
 
+  // Ejercicio 6: guarda en localStorage si js/persistencia.js está cargado.
+  function persistir() {
+    if (typeof window.guardarDatos === "function") {
+      window.guardarDatos();
+    }
+  }
+
   function mostrarMensaje(mensajeError, mensajeOk, detalle, textoOriginalError) {
     if (detalle !== "") {
       if (mensajeError) {
@@ -289,6 +296,7 @@
     }
     libro.id = slugUnico(DATOS.libros, titulo);
     DATOS.libros.push(libro);
+    persistir();
     renderTablaLibros();
     var filtro = document.getElementById("catalogo-busqueda");
     if (typeof window.renderCatalogo === "function") {
@@ -320,6 +328,7 @@
     }
     cliente.id = slugUnico(DATOS.clientes, cliente.nombre);
     DATOS.clientes.push(cliente);
+    persistir();
     renderTablaClientes();
     agregarOpcion(document.getElementById("venta-cliente"), cliente.id, cliente.nombre);
     form.reset();
