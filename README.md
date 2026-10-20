@@ -40,21 +40,20 @@ Es una sola página con cinco secciones. El menú superior lleva a cada una con 
 - Alta de libros con selectores generados desde los datos (editorial, género con «Sin clasificar», autores múltiples) y validaciones: título e ISBN obligatorios, ISBN único sin espacios ni guiones, precio numérico mayor que cero, editorial y autores existentes, al menos un autor (Ej. 4).
 - Alta de clientes con validaciones: nombre y email obligatorios, formato de email, email único sin distinguir mayúsculas ni espacios exteriores (Ej. 4).
 - Después de un alta, el listado, el catálogo y el selector de venta se actualizan sin recargar (Ej. 4).
-- Persistencia de libros y clientes en `localStorage`, sin duplicar ejemplos al recargar (Ej. 6).
+- Venta simulada e historial dinámicos: cliente y renglones, cálculo de precio unitario, subtotal y total, validaciones (cliente, cantidad entera y libro repetido), confirmación sin recargar y detalle de cada venta (Ej. 5).
+- Selectores de venta poblados desde `DATOS`, incluidos los libros y clientes nuevos o recuperados (Ej. 5 y 6).
+- Persistencia de libros, clientes y ventas en `localStorage`, sin duplicar ejemplos ni ventas al recargar (Ej. 6).
 - Diseño adaptable a 320 px y 1280 px, foco visible y tablas con desplazamiento propio (Ej. 2).
 
 **Pendientes**
 
-- Venta simulada e historial dinámicos (Ej. 5, en integración). Hasta entonces, las vistas Ventas e Historial muestran la maqueta estática del Ej. 1.
-- Persistencia de ventas: `js/persistencia.js` ya guarda `DATOS.ventas`; falta que el JS de ventas llame a `guardarDatos()` al confirmar.
-- Selectores de venta poblados desde los datos guardados: hoy, después de recargar, los libros y clientes nuevos están en los listados pero no en los selectores de venta (se resuelve con el Ej. 5).
 - No se editan ni eliminan registros (la consigna no lo exige).
 
 ## Datos iniciales
 
 Están en `js/datos.js`, en el objeto global `DATOS`:
 
-- `libros` (6), `clientes` (3): son los ejemplos del primer inicio y luego se guardan en `localStorage`.
+- `libros` (6), `clientes` (3), `ventas` (1: V-001, con su detalle): son los ejemplos del primer inicio y luego se guardan en `localStorage`.
 - `editoriales` (2), `generos` (2), `autores` (3): son fijos, no tienen alta y no se guardan.
 
 Cada libro se relaciona por `id` con una editorial y uno o más autores; `generoId: null` se muestra como «Sin clasificar».
@@ -115,17 +114,17 @@ Herramientas del navegador (`F12`) → **Aplicación** → **Almacenamiento loca
 
 ## Casos manuales
 
-Probados el 19/10/2026 abriendo `index.html` con `file://` en Chromium.
+Probados el 19/10/2026 en Chrome con Live Server (`http://127.0.0.1:5500`) para los casos 4 a 7 y con `file://` en Chromium para los casos 1 a 3 y 8.
 
 | # | Caso | Resultado esperado | Resultado observado |
 |---|---|---|---|
 | 1 | Búsqueda con una parte del título en mayúsculas; luego búsqueda vacía y texto inexistente | Coincidencias sin distinguir mayúsculas; catálogo completo; mensaje sin resultados | ✅ «MAPA» muestra solo «El mapa de las horas lentas»; «   PATIO  » encuentra «Crónicas del patio interior». Vacía: los 6 libros, sin mensajes. «zzzz inexistente»: se oculta la tabla y aparece «No se encontraron libros con ese título.» |
 | 2 | Alta de libro con ISBN existente y luego con ISBN nuevo | El duplicado se rechaza; el válido aparece en catálogo y selección de venta | ✅ `978-950-0100-01-1` (mismo ISBN que un ejemplo, con guiones): «Ya existe un libro con ese ISBN.», no se agrega. `978-950-0100-07-3`: aparece en el catálogo, en Libros y en el selector de venta, sin recargar |
 | 3 | Alta de cliente con email inválido, email existente en mayúsculas y email nuevo | Se rechazan los dos primeros; el nuevo aparece en listado y selección | ✅ `ana.lopez@`: «El email no tiene un formato válido.». `  VALENTINA.RIOS@EJEMPLO.COM `: «Ya existe un cliente con ese email.». `ana.lopez@ejemplo.com`: aparece en Clientes y en el selector de venta |
-| 4 | Venta sin cliente, cantidad cero, negativa o decimal; libro repetido | No se confirma; el duplicado no crea otro renglón | ⏳ Pendiente: depende del Ej. 5 |
-| 5 | Venta válida: dos unidades a 1500 y una a 2000 | Subtotales 3000 y 2000; total 5000; detalle conservado en el historial | ⏳ Pendiente: depende del Ej. 5 |
-| 6 | Venta confirmada y cambio exclusivo del precio del catálogo guardado, en una copia del proyecto | Tras recargar, el precio unitario, los subtotales y el total de la venta conservan los valores confirmados | ⏳ Pendiente: depende del Ej. 5. Parte comprobada: al cambiar el precio en `paginaViva.libros` y recargar, el catálogo muestra el precio nuevo (9999.00) |
-| 7 | Recarga después de altas y venta | Se recuperan datos sin duplicar ejemplos ni ventas | ⚠️ Parcial. Altas: tras 3 recargas y tras cerrar y reabrir el navegador hay 7 libros y 4 clientes, sin duplicados. Ventas: pendiente Ej. 5. Además, después de recargar el libro y el cliente nuevos no aparecen en los selectores de venta (todavía son HTML estático) |
+| 4 | Venta sin cliente, cantidad cero, negativa o decimal; libro repetido | No se confirma; el duplicado no crea otro renglón | ✅ Venta sin cliente: «Elegí un cliente para la venta.». Cantidad `0`, `-1` o `1,5`: «La cantidad del renglón 1 tiene que ser un número entero mayor que cero.». Mismo libro en dos renglones: «Ese libro ya está en otro renglón. Cambiá la cantidad de ese renglón.» y el select vuelve al libro anterior, sin crear un renglón duplicado |
+| 5 | Venta válida: dos unidades a 1500 y una a 2000 | Subtotales 3000 y 2000; total 5000; detalle conservado en el historial | ✅ El mapa de las horas lentas × 2 (subtotal 3000.00) + Crónicas del patio interior × 1 (subtotal 2000.00): total 5000.00. «Venta V-002 confirmada correctamente.» y aparece en el Historial con su detalle |
+| 6 | Venta confirmada y cambio exclusivo del precio del catálogo guardado, en una copia del proyecto | Tras recargar, el precio unitario, los subtotales y el total de la venta conservan los valores confirmados | ✅ Se cambió en `localStorage` el precio de El mapa de las horas lentas a 9999 y se recargó: el catálogo muestra 9999.00 y el detalle de V-002 conserva 1500.00 / 3000.00 / total 5000.00 |
+| 7 | Recarga después de altas y venta | Se recuperan datos sin duplicar ejemplos ni ventas | ✅ Se agregó un libro (El principito), un cliente (Ana Pérez) y una venta nueva; después de recargar 3 veces hay 7 libros, 4 clientes y las ventas V-001 a V-003, sin duplicados |
 | 8 | Navegación por teclado y anchos de 320 px y 1280 px | Foco visible, controles utilizables y tabla con desplazamiento propio | ✅ Con `Tab` se recorren menú, buscador, botón y tabla con foco visible. A 320 px y 1280 px no hay desplazamiento horizontal de la página; la tabla se desplaza dentro de su contenedor |
 
 ## Imágenes
@@ -141,6 +140,7 @@ js/datos.js           Datos iniciales: objeto DATOS (Ej. 3)
 js/persistencia.js    localStorage: carga y guardado (Ej. 6)
 js/catalogo.js        Catálogo y filtro (Ej. 3)
 js/altas.js           Altas de libros y clientes (Ej. 4)
+js/ventas.js          Venta e historial (Ej. 5)
 openspec/             Specs y changes de cada ejercicio (SDD con OpenSpec)
 prompts/              Prompts usados para cada ejercicio
 docs/                 Consigna
@@ -150,8 +150,8 @@ Trabajamos con SDD (OpenSpec): cada ejercicio es un change (`ejercicio-N-...`) c
 
 ## Entrega
 
-El `.zip` lleva solo lo necesario para abrir el proyecto (sin dependencias ni herramientas). Desde la carpeta del repositorio:
+El `.zip` de entrega debe incluir **todo el repositorio**, incluida la carpeta `openspec/` (lo pide el profesor). Desde la carpeta del repositorio:
 
 ```bash
-git archive --format=zip -o parcial1-libreria.zip HEAD index.html css js README.md
+git archive --format=zip -o parcial1-libreria.zip HEAD
 ```

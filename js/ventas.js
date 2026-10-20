@@ -192,6 +192,7 @@
     cantidad.value = renglon.cantidad;
     cantidad.addEventListener("input", function () {
       renglon.cantidad = cantidad.value;
+      ocultarError();
       actualizarImportes();
     });
 
