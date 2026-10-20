@@ -2,7 +2,7 @@
    Librería Página Viva — Datos locales (Ejercicio 3)
    Capa de datos estáticos con los valores congelados del Ejercicio 1
    (openspec/changes/archive/2026-10-14-ejercicio-1-html/design.md §5).
-   Sin ventas: quedan para el Ejercicio 5. Sin librerías ni fetch.
+   Las ventas las agrega el Ejercicio 5 (V-001 de ejemplo). Sin librerías ni fetch.
    ========================================================================== */
 
 // `var` a propósito: script clásico (sin type="module", compatible con
@@ -81,5 +81,18 @@ var DATOS = {
     { id: "valentina-rios", nombre: "Valentina Ríos", email: "valentina.rios@ejemplo.com" },
     { id: "martin-aguirre", nombre: "Martín Aguirre", email: "martin.aguirre@ejemplo.com" },
     { id: "sofia-benitez", nombre: "Sofía Benítez", email: "sofia.benitez@ejemplo.com" }
+  ],
+  ventas: [
+    {
+      id: "V-001",
+      fecha: "2026-10-14",
+      clienteId: "valentina-rios",
+      clienteNombre: "Valentina Ríos",
+      renglones: [
+        { libroId: "el-mapa-de-las-horas-lentas", titulo: "El mapa de las horas lentas", cantidad: 2, precioUnitario: 1500, subtotal: 3000 },
+        { libroId: "cronicas-del-patio-interior", titulo: "Crónicas del patio interior", cantidad: 1, precioUnitario: 2000, subtotal: 2000 }
+      ],
+      total: 5000
+    }
   ]
 };
