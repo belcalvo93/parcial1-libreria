@@ -14,7 +14,7 @@ El Ejercicio 5 (20 pts) pide la venta simulada y el historial. Hoy `form-venta` 
 - Historial dinámico desde `DATOS.ventas`: tabla con identificador, fecha, cliente y total, y un `<details>` por venta con sus renglones. Lee solo los datos guardados en la venta, nunca el precio actual del catálogo. No hay botones de editar ni eliminar.
 - `js/datos.js` suma `ventas` con la V-001 de ejemplo del Ej. 1.
 - `js/altas.js`: al dar de alta un libro o cliente llama a `window.actualizarSelectsVenta()` en lugar de agregar la opción a mano en `venta-libro-1` (que ahora puede no existir).
-- `index.html`: el `<details>` estático del historial queda dentro de `<div id="historial-detalles">` y se agrega `<script src="js/ventas.js"></script>` al final. No se toca `css/`.
+- `index.html`: solo se agrega `<script src="js/ventas.js"></script>` al final. No se toca `css/`.
 
 ## Capabilities
 
@@ -26,6 +26,6 @@ El Ejercicio 5 (20 pts) pide la venta simulada y el historial. Hoy `form-venta` 
 ## Impact
 
 - Archivo nuevo: `js/ventas.js`.
-- Archivos modificados: `js/datos.js` (+`ventas`), `js/altas.js` (opciones de venta), `index.html` (contenedor de detalles y `<script>`).
+- Archivos modificados: `js/datos.js` (+`ventas`), `js/altas.js` (opciones de venta), `index.html` (+1 línea `<script>`).
 - Contrato con el Ej. 6: `DATOS.ventas`, `window.guardarDatos()` después de confirmar, ids desde `DATOS.ventas.length`, selects desde `DATOS` al cargar.
 - Fuera de alcance: stock, cobros, facturación, editar o eliminar ventas, persistencia (Ej. 6).

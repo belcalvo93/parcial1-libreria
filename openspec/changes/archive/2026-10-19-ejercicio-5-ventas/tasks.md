@@ -22,7 +22,7 @@
 
 ## 4. Historial
 
-- [x] 4.1 Envolver el `<details>` estático en `<div id="historial-detalles">` y agregar `<script src="js/ventas.js"></script>` en `index.html`
+- [x] 4.1 Agregar `<script src="js/ventas.js"></script>` en `index.html` (única línea nueva)
 - [x] 4.2 `renderHistorial()` desde `DATOS.ventas` con fila y `<details>` por venta; mensaje de historial vacío
 
 ## 5. Verificación

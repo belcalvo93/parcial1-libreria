@@ -139,10 +139,11 @@
     }
   }
 
-  function crearTextoConOutput(texto, id) {
+  function crearTextoConOutput(texto, id, calculadoDe) {
     var p = document.createElement("p");
     var output = document.createElement("output");
     output.id = id;
+    output.setAttribute("for", calculadoDe);
     p.appendChild(document.createTextNode(texto));
     p.appendChild(output);
     return { p: p, output: output };
@@ -194,8 +195,8 @@
       actualizarImportes();
     });
 
-    var precio = crearTextoConOutput("Precio unitario: ", "venta-precio-" + numero);
-    var subtotal = crearTextoConOutput("Subtotal: ", "venta-subtotal-" + numero);
+    var precio = crearTextoConOutput("Precio unitario: ", "venta-precio-" + numero, select.id);
+    var subtotal = crearTextoConOutput("Subtotal: ", "venta-subtotal-" + numero, select.id + " " + cantidad.id);
 
     var quitar = document.createElement("button");
     quitar.type = "button";
@@ -220,6 +221,7 @@
   function renderRenglones() {
     var form = document.getElementById("form-venta");
     var botonAgregar = document.getElementById("venta-agregar");
+    var total = document.getElementById("venta-total");
     if (!form || !botonAgregar) {
       return;
     }
@@ -227,11 +229,16 @@
       form.removeChild(nodos.grupo);
     });
     nodosRenglones = [];
+    var idsCampos = [];
     renglones.forEach(function (renglon, i) {
       var nodos = crearRenglon(i);
       form.insertBefore(nodos.grupo, botonAgregar);
       nodosRenglones.push(nodos);
+      idsCampos.push("venta-libro-" + (i + 1), "venta-cantidad-" + (i + 1));
     });
+    if (total) {
+      total.setAttribute("for", idsCampos.join(" "));
+    }
     actualizarImportes();
   }
 
@@ -363,20 +370,22 @@
   function renderHistorial() {
     var tabla = document.getElementById("tabla-historial");
     var tbody = document.querySelector("#tabla-historial tbody");
-    var detalles = document.getElementById("historial-detalles");
+    var seccion = document.getElementById("historial");
     var mensajeVacia = document.getElementById("mensaje-historial-vacia");
-    if (!tabla || !tbody || !detalles || !mensajeVacia) {
+    if (!tabla || !tbody || !seccion || !mensajeVacia) {
       return;
     }
     tbody.textContent = "";
-    detalles.textContent = "";
+    // los details van sueltos en la seccion para que tomen el espaciado de .card
+    seccion.querySelectorAll(":scope > details").forEach(function (details) {
+      seccion.removeChild(details);
+    });
     DATOS.ventas.forEach(function (venta) {
       tbody.appendChild(crearFila([venta.id, venta.fecha, venta.clienteNombre, formatearPrecio(venta.total)]));
-      detalles.appendChild(crearDetalle(venta));
+      seccion.insertBefore(crearDetalle(venta), mensajeVacia);
     });
     var tieneVentas = DATOS.ventas.length > 0;
     tabla.hidden = !tieneVentas;
-    detalles.hidden = !tieneVentas;
     mensajeVacia.hidden = tieneVentas;
   }
 

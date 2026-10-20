@@ -13,7 +13,7 @@ Ver `proposal.md`. Estado: Ej. 1 a 4 archivados. `DATOS` global en `js/datos.js`
 
 ### 1. Estado en un array `renglones` y DOM generado desde ahí
 
-`renglones = [{ libroId, cantidad }]`, con `cantidad` como texto tal cual lo escribió la persona. Agregar, quitar o refrescar opciones vuelve a generar todos los renglones (ids `venta-libro-N`, `venta-cantidad-N`, etc., numerados por posición). Escribir una cantidad solo actualiza importes, para no perder el foco del campo.
+`renglones = [{ libroId, cantidad }]`, con `cantidad` como texto tal cual lo escribió la persona. Agregar, quitar o refrescar opciones vuelve a generar todos los renglones (ids `venta-libro-N`, `venta-cantidad-N`, etc., numerados por posición). Escribir una cantidad solo actualiza importes, para no perder el foco del campo. Cada `<output>` lleva `for` con los campos de los que se calcula, y el `for` de `venta-total` se actualiza con los renglones vigentes.
 
 Los renglones se insertan como hijos directos de `form-venta`, antes de `venta-agregar`, con la misma estructura del Ej. 1 (`.form__grupo` con `<output>`), así el CSS del Ej. 2 los toma sin cambios. Al cargar se quita el renglón estático.
 
@@ -42,7 +42,7 @@ Los renglones se insertan como hijos directos de `form-venta`, antes de `venta-a
 
 ### 4. Historial
 
-`renderHistorial()` vacía `#tabla-historial tbody` y `#historial-detalles` y los vuelve a generar desde `DATOS.ventas`: una fila por venta y un `<details>` con `<summary>` «Ver detalle de V-00N» y su tabla de renglones. Sin ventas se oculta la tabla y se muestra `mensaje-historial-vacia`. Todo con `createElement` + `textContent`.
+`renderHistorial()` vacía `#tabla-historial tbody`, saca los `<details>` que son hijos directos de `#historial` y los vuelve a generar desde `DATOS.ventas`: una fila por venta y un `<details>` (insertado antes de `mensaje-historial-vacia`, así toma el espaciado de `.card`) con `<summary>` «Ver detalle de V-00N» y su tabla de renglones. Sin ventas se oculta la tabla y se muestra `mensaje-historial-vacia`. Todo con `createElement` + `textContent`.
 
 ### 5. Convivencia con Ej. 4 y Ej. 6
 
