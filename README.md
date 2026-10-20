@@ -39,22 +39,21 @@ Es una sola página con cinco secciones. El menú superior lleva a cada una con 
 - Catálogo generado con JavaScript desde los datos locales; filtro por título sin distinguir mayúsculas, con coincidencia parcial y recorte de espacios; mensajes de catálogo vacío y sin resultados (Ej. 3).
 - Alta de libros con selectores generados desde los datos (editorial, género con «Sin clasificar», autores múltiples) y validaciones: título e ISBN obligatorios, ISBN único sin espacios ni guiones, precio numérico mayor que cero, editorial y autores existentes, al menos un autor (Ej. 4).
 - Alta de clientes con validaciones: nombre y email obligatorios, formato de email, email único sin distinguir mayúsculas ni espacios exteriores (Ej. 4).
-- Después de un alta, el listado, el catálogo y el selector de venta se actualizan sin recargar (Ej. 4).
-- Persistencia de libros y clientes en `localStorage`, sin duplicar ejemplos al recargar (Ej. 6).
+- Después de un alta, el listado, el catálogo y los selectores de venta se actualizan sin recargar (Ej. 4 y 5).
+- Venta simulada: cliente existente, renglones que se agregan y quitan, cantidades enteras mayores que cero, sin libros repetidos; subtotal, total con dos decimales y confirmación que limpia el formulario (Ej. 5).
+- Historial con identificador, fecha, cliente y total, y el detalle de renglones en un desplegable. El precio unitario se copia al confirmar, así que el historial no cambia si después cambia el catálogo (Ej. 5).
+- Persistencia de libros, clientes y ventas en `localStorage`, sin duplicar ejemplos ni ventas al recargar (Ej. 6).
 - Diseño adaptable a 320 px y 1280 px, foco visible y tablas con desplazamiento propio (Ej. 2).
 
 **Pendientes**
 
-- Venta simulada e historial dinámicos (Ej. 5, en integración). Hasta entonces, las vistas Ventas e Historial muestran la maqueta estática del Ej. 1.
-- Persistencia de ventas: `js/persistencia.js` ya guarda `DATOS.ventas`; falta que el JS de ventas llame a `guardarDatos()` al confirmar.
-- Selectores de venta poblados desde los datos guardados: hoy, después de recargar, los libros y clientes nuevos están en los listados pero no en los selectores de venta (se resuelve con el Ej. 5).
-- No se editan ni eliminan registros (la consigna no lo exige).
+- No hay pendientes del alcance de la consigna. No se editan ni eliminan registros ni ventas (la consigna no lo exige).
 
 ## Datos iniciales
 
 Están en `js/datos.js`, en el objeto global `DATOS`:
 
-- `libros` (6), `clientes` (3): son los ejemplos del primer inicio y luego se guardan en `localStorage`.
+- `libros` (6), `clientes` (3) y `ventas` (1, la V-001): son los ejemplos del primer inicio y luego se guardan en `localStorage`.
 - `editoriales` (2), `generos` (2), `autores` (3): son fijos, no tienen alta y no se guardan.
 
 Cada libro se relaciona por `id` con una editorial y uno o más autores; `generoId: null` se muestra como «Sin clasificar».
@@ -89,6 +88,22 @@ Ejemplo de un libro dentro de `paginaViva.libros`:
 }
 ```
 
+Cada venta dentro de `paginaViva.ventas` guarda copia del título y del precio unitario, por eso el historial no depende del catálogo:
+
+```json
+{
+  "id": "V-001",
+  "fecha": "2026-10-14",
+  "clienteId": "valentina-rios",
+  "clienteNombre": "Valentina Ríos",
+  "renglones": [
+    { "libroId": "el-mapa-de-las-horas-lentas", "titulo": "El mapa de las horas lentas", "cantidad": 2, "precioUnitario": 1500, "subtotal": 3000 },
+    { "libroId": "cronicas-del-patio-interior", "titulo": "Crónicas del patio interior", "cantidad": 1, "precioUnitario": 2000, "subtotal": 2000 }
+  ],
+  "total": 5000
+}
+```
+
 ### Límites
 
 - Los datos quedan **en ese navegador, en ese perfil y para esa ubicación de apertura**. Otro navegador, otro perfil, otra computadora o abrir el proyecto desde otra ruta puede mostrar los datos de ejemplo.
@@ -115,18 +130,18 @@ Herramientas del navegador (`F12`) → **Aplicación** → **Almacenamiento loca
 
 ## Casos manuales
 
-Probados el 19/10/2026 abriendo `index.html` con `file://` en Chromium.
+Probados el 19/10/2026 abriendo `index.html` con `file://` en Chromium, con los Ej. 1 a 6 integrados y partiendo sin datos guardados (claves `paginaViva.*` borradas).
 
 | # | Caso | Resultado esperado | Resultado observado |
 |---|---|---|---|
 | 1 | Búsqueda con una parte del título en mayúsculas; luego búsqueda vacía y texto inexistente | Coincidencias sin distinguir mayúsculas; catálogo completo; mensaje sin resultados | ✅ «MAPA» muestra solo «El mapa de las horas lentas»; «   PATIO  » encuentra «Crónicas del patio interior». Vacía: los 6 libros, sin mensajes. «zzzz inexistente»: se oculta la tabla y aparece «No se encontraron libros con ese título.» |
 | 2 | Alta de libro con ISBN existente y luego con ISBN nuevo | El duplicado se rechaza; el válido aparece en catálogo y selección de venta | ✅ `978-950-0100-01-1` (mismo ISBN que un ejemplo, con guiones): «Ya existe un libro con ese ISBN.», no se agrega. `978-950-0100-07-3`: aparece en el catálogo, en Libros y en el selector de venta, sin recargar |
 | 3 | Alta de cliente con email inválido, email existente en mayúsculas y email nuevo | Se rechazan los dos primeros; el nuevo aparece en listado y selección | ✅ `ana.lopez@`: «El email no tiene un formato válido.». `  VALENTINA.RIOS@EJEMPLO.COM `: «Ya existe un cliente con ese email.». `ana.lopez@ejemplo.com`: aparece en Clientes y en el selector de venta |
-| 4 | Venta sin cliente, cantidad cero, negativa o decimal; libro repetido | No se confirma; el duplicado no crea otro renglón | ⏳ Pendiente: depende del Ej. 5 |
-| 5 | Venta válida: dos unidades a 1500 y una a 2000 | Subtotales 3000 y 2000; total 5000; detalle conservado en el historial | ⏳ Pendiente: depende del Ej. 5 |
-| 6 | Venta confirmada y cambio exclusivo del precio del catálogo guardado, en una copia del proyecto | Tras recargar, el precio unitario, los subtotales y el total de la venta conservan los valores confirmados | ⏳ Pendiente: depende del Ej. 5. Parte comprobada: al cambiar el precio en `paginaViva.libros` y recargar, el catálogo muestra el precio nuevo (9999.00) |
-| 7 | Recarga después de altas y venta | Se recuperan datos sin duplicar ejemplos ni ventas | ⚠️ Parcial. Altas: tras 3 recargas y tras cerrar y reabrir el navegador hay 7 libros y 4 clientes, sin duplicados. Ventas: pendiente Ej. 5. Además, después de recargar el libro y el cliente nuevos no aparecen en los selectores de venta (todavía son HTML estático) |
-| 8 | Navegación por teclado y anchos de 320 px y 1280 px | Foco visible, controles utilizables y tabla con desplazamiento propio | ✅ Con `Tab` se recorren menú, buscador, botón y tabla con foco visible. A 320 px y 1280 px no hay desplazamiento horizontal de la página; la tabla se desplaza dentro de su contenedor |
+| 4 | Venta sin cliente, cantidad cero, negativa o decimal; libro repetido | No se confirma; el duplicado no crea otro renglón | ✅ Sin cliente: «Elegí un cliente para la venta.». Cantidad `0`, `-1` y `1.5`: «La cantidad del renglón 1 tiene que ser un número entero mayor que cero.». Elegir en el renglón 2 el mismo libro del renglón 1: «Ese libro ya está en otro renglón…», el selector vuelve al libro anterior y siguen siendo 2 renglones. Ninguna venta se guarda |
+| 5 | Venta válida: dos unidades a 1500 y una a 2000 | Subtotales 3000 y 2000; total 5000; detalle conservado en el historial | ✅ Subtotales 3000.00 y 2000.00, total 5000.00. Al confirmar: «Venta V-002 confirmada correctamente.», el formulario se limpia y el historial muestra V-002 con su detalle (2 × 1500.00 = 3000.00 y 1 × 2000.00 = 2000.00) |
+| 6 | Venta confirmada y cambio exclusivo del precio del catálogo guardado, en una copia del proyecto | Tras recargar, el precio unitario, los subtotales y el total de la venta conservan los valores confirmados | ✅ Se cambió solo el precio de «El mapa de las horas lentas» a 9999 en `paginaViva.libros`, sin tocar `paginaViva.ventas`. Tras recargar, el catálogo muestra 9999.00 y el detalle de V-002 sigue con 1500.00, 3000.00 y total 5000.00 |
+| 7 | Recarga después de altas y venta | Se recuperan datos sin duplicar ejemplos ni ventas | ✅ Tras 3 recargas y tras cerrar y reabrir el navegador: 7 libros, 4 clientes y las ventas V-001 y V-002 una sola vez. El libro y el cliente nuevos siguen en los selectores de venta. La siguiente venta confirmada es V-003 (no se repiten ids) |
+| 8 | Navegación por teclado y anchos de 320 px y 1280 px | Foco visible, controles utilizables y tabla con desplazamiento propio | ✅ Con `Tab` se recorren menú, buscador, formularios, renglones de venta, botones y desplegables del historial, todos con foco visible. A 320 px y 1280 px no hay desplazamiento horizontal de la página; las tablas se desplazan dentro de su contenedor |
 
 ## Imágenes
 
@@ -141,6 +156,7 @@ js/datos.js           Datos iniciales: objeto DATOS (Ej. 3)
 js/persistencia.js    localStorage: carga y guardado (Ej. 6)
 js/catalogo.js        Catálogo y filtro (Ej. 3)
 js/altas.js           Altas de libros y clientes (Ej. 4)
+js/ventas.js          Venta simulada e historial (Ej. 5)
 openspec/             Specs y changes de cada ejercicio (SDD con OpenSpec)
 prompts/              Prompts usados para cada ejercicio
 docs/                 Consigna
