@@ -205,6 +205,13 @@
     select.appendChild(option);
   }
 
+  // los selects de venta los arma js/ventas.js (Ej. 5)
+  function actualizarVenta() {
+    if (typeof window.actualizarSelectsVenta === "function") {
+      window.actualizarSelectsVenta();
+    }
+  }
+
   function poblarSelect(select, items) {
     if (!select) {
       return;
@@ -302,7 +309,7 @@
     if (typeof window.renderCatalogo === "function") {
       window.renderCatalogo(filtro ? filtro.value : "");
     }
-    agregarOpcion(document.getElementById("venta-libro-1"), isbn, titulo);
+    actualizarVenta();
     form.reset();
     mostrarMensaje(mensajeError, mensajeOk, "", textoOriginalErrorLibro);
   }
@@ -330,7 +337,7 @@
     DATOS.clientes.push(cliente);
     persistir();
     renderTablaClientes();
-    agregarOpcion(document.getElementById("venta-cliente"), cliente.id, cliente.nombre);
+    actualizarVenta();
     form.reset();
     mostrarMensaje(mensajeError, mensajeOk, "", textoOriginalErrorCliente);
   }
