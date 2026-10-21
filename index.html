@@ -27,7 +27,8 @@
         <input type="search" id="catalogo-busqueda" name="catalogo-busqueda" placeholder="Título del libro">
         <button id="catalogo-buscar" class="btn" type="button">Buscar en el catálogo</button>
       </div>
-      <table id="tabla-catalogo" class="tabla">
+      <div class="tabla-contenedor">
+        <table id="tabla-catalogo" class="tabla">
         <thead>
           <tr>
             <th scope="col">Título</th>
@@ -88,7 +89,8 @@
             <td>2800.00</td>
           </tr>
         </tbody>
-      </table>
+        </table>
+      </div>
       <p id="mensaje-catalogo-vacia" class="mensaje" hidden>No hay libros en el catálogo.</p>
       <p id="mensaje-catalogo-sin-resultados" class="mensaje" hidden>No se encontraron libros con ese título.</p>
     </section>
@@ -135,7 +137,8 @@
       </form>
       <p id="mensaje-error-libro" class="mensaje mensaje--error" role="alert" hidden>No se pudo agregar el libro. Revisá los datos.</p>
       <p id="mensaje-ok-libro" class="mensaje mensaje--ok" hidden>Libro agregado correctamente.</p>
-      <table id="tabla-libros" class="tabla">
+      <div class="tabla-contenedor">
+        <table id="tabla-libros" class="tabla">
         <thead>
           <tr>
             <th scope="col">Título</th>
@@ -196,7 +199,8 @@
             <td>2800.00</td>
           </tr>
         </tbody>
-      </table>
+        </table>
+      </div>
       <p id="mensaje-libros-vacia" class="mensaje" hidden>No hay libros registrados.</p>
     </section>
 
@@ -215,7 +219,8 @@
       </form>
       <p id="mensaje-error-cliente" class="mensaje mensaje--error" role="alert" hidden>No se pudo agregar el cliente. Revisá los datos.</p>
       <p id="mensaje-ok-cliente" class="mensaje mensaje--ok" hidden>Cliente agregado correctamente.</p>
-      <table id="tabla-clientes" class="tabla">
+      <div class="tabla-contenedor">
+        <table id="tabla-clientes" class="tabla">
         <thead>
           <tr>
             <th scope="col">Nombre completo</th>
@@ -236,7 +241,8 @@
             <td>sofia.benitez@ejemplo.com</td>
           </tr>
         </tbody>
-      </table>
+        </table>
+      </div>
       <p id="mensaje-clientes-vacia" class="mensaje" hidden>No hay clientes registrados.</p>
     </section>
 
@@ -277,7 +283,8 @@
 
     <section id="historial" class="card">
       <h2>Historial</h2>
-      <table id="tabla-historial" class="tabla">
+      <div class="tabla-contenedor">
+        <table id="tabla-historial" class="tabla">
         <thead>
           <tr>
             <th scope="col">Identificador</th>
@@ -294,10 +301,12 @@
             <td>5000.00</td>
           </tr>
         </tbody>
-      </table>
+        </table>
+      </div>
       <details>
         <summary>Ver detalle de V-001</summary>
-        <table class="tabla">
+        <div class="tabla-contenedor">
+          <table class="tabla">
           <thead>
             <tr>
               <th scope="col">Libro</th>
@@ -320,13 +329,14 @@
               <td>2000.00</td>
             </tr>
           </tbody>
-        </table>
+          </table>
+        </div>
       </details>
       <p id="mensaje-historial-vacia" class="mensaje" hidden>No hay ventas registradas.</p>
     </section>
   </main>
   <footer>
-    <p>Librería Página Viva — TPI Programación III</p>
+    <p>© 2026 Librería Página Viva</p>
   </footer>
   <script src="js/datos.js"></script>
   <script src="js/persistencia.js"></script>

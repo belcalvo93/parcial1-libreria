@@ -364,7 +364,10 @@
     });
     tabla.appendChild(thead);
     tabla.appendChild(tbody);
-    details.appendChild(tabla);
+    var contenedor = document.createElement("div");
+    contenedor.className = "tabla-contenedor";
+    contenedor.appendChild(tabla);
+    details.appendChild(contenedor);
     return details;
   }
 

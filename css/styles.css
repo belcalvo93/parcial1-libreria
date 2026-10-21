@@ -363,17 +363,22 @@ details[open] > summary {
 
 
 /* ==========================================================================
-   10. Tablas (design.md D3)
-   Sin `<div>` contenedor en el HTML, el propio `.tabla` hace de contenedor
-   con scroll. Se cambia `display` solo del elemento `table`; `thead`,
-   `tbody`, `tr` y las celdas conservan su `display`.
+   10. Tablas (design.md)
+   `.tabla-contenedor` es el único responsable del scroll horizontal, de modo
+   que la `<table>` conserva su `display` nativo y no se altera su render en
+   mobile. Las celdas mantienen `white-space: nowrap` para que el ancho mínimo
+   de cada columna sea el del contenido y el scroll no parta el texto.
    ========================================================================== */
-.tabla {
-  display: block;
+.tabla-contenedor {
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
   margin: 0;
 }
 
